@@ -14,7 +14,7 @@ def print():
     from datetime import datetime
 
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        s.connect(('192.168.1.143',9100))
+        s.connect(('10.19.247.192',9100))
         printjob = BrotherPrint(s)
         printjob.template_mode()
         printjob.template_init()

@@ -8,8 +8,11 @@
 <body>
     <div>
         <script>
+	    var login_id = "";
             function getJson() {
-                var xhr = new XMLHttpRequest();
+		getId();
+		sleep(5000);
+    		var xhr = new XMLHttpRequest();
                 xhr.open('GET', 'https://reservation.42network.org/api/me/events');
                 xhr.withCredentials = true;
                 xhr.onreadystatechange = function () {
@@ -26,35 +29,35 @@
                                 console.log("오늘"+_dt);
                                 console.log("시간"+String(_dt.getHours()));
                                 _str[String(_dt.getHours())] = tzs[i].is_subscribed == true ? 'O' : 'X';
+				console.log(_str);
                             }
                         }
                         for (var key in _str) {
-                            console.log(key + ":" + _str[key]);
+			    console.log(key + ":" + _str[key]);
                             var str = str + key + ":" + _str[key] + '<br>';
                         }
-                        var _id = getId();
+                        //getId();
+			console.log("login_id:" + login_id);
                         document.querySelector('#reservations').innerHTML = str;
-                        print(_str, _id);
+			print(_str, login_id);
                     }
                 }
-                xhr.send();
+		xhr.send();
             }
             function getId() {
                 var xhr = new XMLHttpRequest();
                 xhr.open('GET', 'https://reservation.42network.org/api/me/user');
                 xhr.withCredentials = true;
-                var _id ="";
                 xhr.onreadystatechange = function () {
                     if (xhr.readyState === 4 && xhr.status === 200) {
                         var _tzs = xhr.responseText;
                         var tzs = JSON.parse(_tzs);
-                        _id = tzs.login;
-                        console.log(_id);
-                        document.querySelector('#clusterid').innerHTML = _id;
-                    }
+                        login_id = tzs.login;
+                        console.log(login_id);
+                        document.querySelector('#clusterid').innerHTML = login_id;
+		    }
                 }
                 xhr.send();
-                return (_id);
             }          
             function print(dict, _id) {
                 var xhr = new XMLHttpRequest();
