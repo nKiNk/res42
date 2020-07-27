@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <script>
+            function getJson() {
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', 'https://reservation.42network.org/api/me/events');
+                xhr.withCredentials = true;
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        var _tzs = xhr.responseText;
+                        var tzs = JSON.parse(_tzs);
+                        var _str = '';
+                        for(var i = 0; i< tzs.length; i++){
+                            if (tzs[i].is_subscribed === true) {
+                                var _dt = new Date(tzs[i].Event.begin_at);
+                                //var _resdate = _dt.getDate();
+                                //var _reshour = _dt.getHours();
+                                //_dt.setHours(_dt.getHours + _dt.getTimezoneOffset);
+                                //_str += '<li>'+ tzs[i].Event.begin_at.toLocaleString('ko-KR', {timeZone: "GMT+9"})+'</li>';
+                                if (_dt.toDateString() == new Date().toDateString()) {
+                                    _str += '<li>'+ _dt.toTimeString()+'</li>';
+                                }
+                            
+                            }
+                        }
+                        _str = '<ul>'+_str+print()+'</ul>';
+                        document.querySelector('#reservations').innerHTML = _str;
+                    }
+                }
+                xhr.send();
+            }
+            function getId() {
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', 'https://reservation.42network.org/');
+                xhr.withCredentials = true;
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        var _tzs = xhr.responseXML;
+
+                        var userNameElement = _tzs.getElementsByClassName("is-user-name");
+                        return (userNameElement.innerText);
+                    }
+                }
+                xhr.send();
+            }
+            
+            function showId() {
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', 'https://reservation.42network.org/');
+                xhr.withCredentials = true;
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        var _tzs = xhr.responseText;
+                        var userNameElement = _tzs.getElementsByClassName("is-user-name");
+                        var _str = '';
+                        _str += '<li>'+ userNameElement.innerText+'</li>';
+                        }
+                    _str = '<ul>'+_str+'</ul>';
+                    document.querySelector('#reservations').innerHTML = _str;
+                }
+                xhr.send();
+            }
+            
+            function print() {
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', '/print');
+                xhr.send();
+            }
+        </script>
+        <div>로그인이 완료되면 출력 버튼을 누르세요</div>
+        <!--<div style="text-align: right"><a href="#" onclick="getJson();">[출력]</a></div>-->
+        <div style="text-align: right"><a href="#" onclick="showId();">[아이디]</a></div>
+        <p id="reservations"></p>
+    </div>
+    <div>
+        <iframe id="reservation" frameborder="0" marginwidth="0" marginheight="0" style="display:block; width:100vw; height: 100vh" src="https://reservation.42network.org/#/" sandbox="allow-same-origin allow-scripts">
+        </iframe>
+        
+    </div>
+</body>
+</html>
