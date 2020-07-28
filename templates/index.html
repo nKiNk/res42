@@ -13,7 +13,7 @@
             function ajax(url) {
                 return new Promise(function (resolve, reject) {
                     var xhr = new XMLHttpRequest();
-                    xhr.open('GET', 'https://reservation.42network.org/api/me/events');
+                    xhr.open('GET', url);
                     xhr.withCredentials = true;
                     xhr.onreadystatechange = function () {
                         if (xhr.readyState === 4 && xhr.status === 200)
@@ -24,7 +24,7 @@
                     xhr.onerror = function () {
                         reject(Error("network error"));
                     };
-                    xhr.send(data);
+                    xhr.send();
                 });
             }
 
@@ -129,7 +129,7 @@
                                 .catch(error => console.log(error))
                                 .then(getId)
                                 .catch(error => console.log(error))
-                                .then(result => {
+                                .then(result => ㄹㅎㄹㅎ쇼ㅗㄱㅎㅎㅊㄹㄹㄹ{
                                     var xhr = new XMLHttpRequest();
                                     var body = "";
                                     for (var key in dict) {
