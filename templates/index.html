@@ -61,28 +61,29 @@
                 });
             }
 
-            Promise.resolve()
-                .then(getJson)
-                .catch(error => console.log(error))
-                .then(getId)
-                .catch(error => console.log(error))
-                .then(result => {
-                    var xhr = new XMLHttpRequest();
-                    var body = "";
-                    for (var key in dict) {
-                        body = body + key + "=" + dict[key] + "&";
-                        console.log(body);
-                    }
-                    body = body + "login=" + _id;
-                    xhr.open('GET', '/print?' + body);
-                    xhr.send();
-
-                })
+	    function print() {
+	        Promise.resolve()
+                    .then(getJson)
+                    .catch(error => console.log(error))
+                    .then(getId)
+                    .catch(error => console.log(error))
+                    .then(result => {
+                        var xhr = new XMLHttpRequest();
+                        var body = "";
+                        for (var key in dict) {
+                            body = body + key + "=" + dict[key] + "&";
+                            console.log(body);
+                        }
+                        body = body + "login=" + _id;
+                        xhr.open('GET', '/print?' + body);
+                        xhr.send();
+	            })
+	    }
         </script>
         <div>로그인이 완료되면 출력 버튼을 누르세요</div>
         <div>오류 발생시 이 <a href="https://reservation.42network.org">링크</a>로
             로그인하신 뒤 돌아와서 <a onClick="window.location.reload()">새로고침</a>해주세요.</div>
-        <div style="text-align: center"><a href="#" onclick="Promise.resolve();">[출력]</a></div>
+        <div style="text-align: center"><a href="#" onclick="print();">[출력]</a></div>
         <div id="clusterid"></div>
         <div id="reservations"></div>
     </div>
