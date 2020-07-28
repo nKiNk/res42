@@ -13,6 +13,7 @@
             var login_id = "";
             function getJson() {
                 getId();
+                sleep(5000);
                 var xhr = new XMLHttpRequest();
                 xhr.open('GET', 'https://reservation.42network.org/api/me/events');
                 xhr.withCredentials = true;
@@ -49,11 +50,11 @@
                 var xhr = new XMLHttpRequest();
                 xhr.open('GET', 'https://reservation.42network.org/api/me/user');
                 xhr.withCredentials = true;
-                xhr.onreadystatechange = function () {
+                xhr.onreadystatechange = function (callbackFunc) { //callback
                     if (xhr.readyState === 4 && xhr.status === 200) {
                         var _tzs = xhr.responseText;
                         var tzs = JSON.parse(_tzs);
-                        login_id = tzs.login;
+                        callbackFunc(tzs.login); //callback callback에 callback을 넣는 케이스라서 어떻게 처리해야 할지 모르겠음. 폐기.
                         console.log(login_id);
                         document.querySelector('#clusterid').innerHTML = login_id;
                     }
