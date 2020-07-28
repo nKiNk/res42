@@ -19,7 +19,7 @@
                         if (xhr.readyState === 4 && xhr.status === 200)
                             resolve(JSON.parse(xhr.responseText));
                         else
-                            reject(Error(xhr.statusText));
+                            reject(Error(req.statusText));
                     }
                     xhr.onerror = function () {
                         reject(Error("network error"));
