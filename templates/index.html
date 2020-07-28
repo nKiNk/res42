@@ -33,29 +33,25 @@
                     ajax('https://reservation.42network.org/api/me/events'),
                     ajax('https://reservation.42network.org/api/me/user')])
                     .then(function (results) {
-                        //result[0] reserved events
+                        //results[0] reserved events
                         var tzs = results[0];
                         var _str = {};
                         var rsv = "";
                         for (var i = 0; i < tzs.length; i++) {
                             var _dt = new Date(tzs[i].Event.begin_at);
-                            console.log(_dt);
-
                             if (_dt.toDateString() == new Date().toDateString()) {
-                                console.log("오늘" + _dt);
-                                console.log("시간" + String(_dt.getHours()));
                                 _str[String(_dt.getHours())] = tzs[i].is_subscribed == true ? 'O' : 'X';
-                                console.log(_str);
                             }
                         }
+                        console.log(_str);
                         for (var key in _str) {
-                            console.log(key + ":" + _str[key]);
                             rsv = rsv + key + ":" + _str[key] + '<br>';
                         }
+                        console.log(rsv);
                         document.querySelector('#reservations').innerHTML = rsv;
 
-                        //result[1] login id
-                        var login_id = result[1].login;
+                        //results[1] login id
+                        var login_id = results[1].login;
                         console.log(login_id);
                         document.querySelector('#clusterid').innerHTML = login_id;
 
@@ -64,9 +60,9 @@
                         var body = "";
                         for (var key in _str) {
                             body = body + key + "=" + _str[key] + "&";
-                            console.log(body);
                         }
-                        body = body + "login=" + _id;
+                        body = body + "login=" + login_id;
+                        console.log(body);
                         xhr.open('GET', '/print?' + body);
                         xhr.send();
                     })
