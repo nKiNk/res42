@@ -19,7 +19,7 @@
                         if (xhr.readyState === 4 && xhr.status === 200)
                             resolve(JSON.parse(xhr.responseText));
                         else
-                            reject(Error(req.statusText));
+                            reject(Error(xhr.statusText));
                     }
                     xhr.onerror = function () {
                         reject(Error("network error"));
@@ -67,80 +67,11 @@
                         xhr.send();
                     })
             }
-/*
-                        var login_id = "";
-                        function getJson() {
-                            return new Promise(function (resolve, reject) {
-                                var xhr = new XMLHttpRequest();
-                                xhr.open('GET', 'https://reservation.42network.org/api/me/events');
-                                xhr.withCredentials = true;
-                                xhr.onreadystatechange = function () {
-                                    if (xhr.readyState === 4 && xhr.status === 200) {
-                                        var _tzs = xhr.responseText;
-                                        var tzs = JSON.parse(_tzs);
-                                        var _str = {};
-                                        var str = "";
-                                        for (var i = 0; i < tzs.length; i++) {
-                                            var _dt = new Date(tzs[i].Event.begin_at);
-                                            console.log(_dt);
-            
-                                            if (_dt.toDateString() == new Date().toDateString()) {
-                                                console.log("오늘" + _dt);
-                                                console.log("시간" + String(_dt.getHours()));
-                                                _str[String(_dt.getHours())] = tzs[i].is_subscribed == true ? 'O' : 'X';
-                                                console.log(_str);
-                                            }
-                                        }
-                                        for (var key in _str) {
-                                            console.log(key + ":" + _str[key]);
-                                            var str = str + key + ":" + _str[key] + '<br>';
-                                        }
-                                        document.querySelector('#reservations').innerHTML = str;
-                                    }
-                                }
-                                xhr.send();
-                            });
-                        }
-                        function getId() {
-                            return new Promise(function (resolve, reject) {
-                                var xhr = new XMLHttpRequest();
-                                xhr.open('GET', 'https://reservation.42network.org/api/me/user');
-                                xhr.withCredentials = true;
-                                xhr.onreadystatechange = function () {
-                                    if (xhr.readyState === 4 && xhr.status === 200) {
-                                        var _tzs = xhr.responseText;
-                                        var tzs = JSON.parse(_tzs);
-                                        login_id = tzs.login;
-                                        console.log(login_id);
-                                        document.querySelector('#clusterid').innerHTML = login_id;
-                                    }
-                                }
-                                xhr.send();
-                            });
-                        }
-            
-                        function print() {
-                            Promise.resolve()
-                                .then(getJson)
-                                .catch(error => console.log(error))
-                                .then(getId)
-                                .catch(error => console.log(error))
-                                .then(result => ㄹㅎㄹㅎ쇼ㅗㄱㅎㅎㅊㄹㄹㄹ{
-                                    var xhr = new XMLHttpRequest();
-                                    var body = "";
-                                    for (var key in dict) {
-                                        body = body + key + "=" + dict[key] + "&";
-                                        console.log(body);
-                                    }
-                                    body = body + "login=" + _id;
-                                    xhr.open('GET', '/print?' + body);
-                                    xhr.send();
-                                })
-                        }*/
         </script>
         <div>로그인이 완료되면 출력 버튼을 누르세요</div>
         <div>오류 발생시 이 <a href="https://reservation.42network.org">링크</a>로
-            로그인하신 뒤 돌아와서 <a onClick="window.location.reload()">새로고침</a>해주세요.</div>
+		로그인하신 뒤 돌아와서 <a onClick="window.location.reload()">새로고침</a>해주세요.<br>
+		</div>
         <div style="text-align: center"><a href="#" onclick="printBtnClick();">[출력]</a></div>
         <div id="clusterid"></div>
         <div id="reservations"></div>
