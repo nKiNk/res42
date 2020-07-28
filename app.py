@@ -6,10 +6,6 @@ app.secret_key = 'app secret key'
 def home():
     return render_template("index.html")
 
-@app.route("/promise")
-def promise():
-    return render_template("index_promise.html")
-
 @app.route("/print", methods=['GET'])
 def print():
     from brother import BrotherPrint
