@@ -1,6 +1,8 @@
 from flask import Flask, render_template, session, request
 app = Flask(__name__)
 app.secret_key = 'app secret key'
+import os
+BROTHER_IP = os.environ["BROTHER_IP"]
 
 @app.route("/")
 def home():
@@ -14,7 +16,7 @@ def print():
     from datetime import datetime
 
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        s.connect(('10.19.247.192',9100))
+        s.connect((BROTHER_IP,9100))
         printjob = BrotherPrint(s)
         printjob.template_mode()
         printjob.template_init()
